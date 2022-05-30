@@ -37,10 +37,10 @@ class Board:
                 or mark == self.board[0][2] and mark == self.board[1][2] and mark == self.board[2][2] \
                 or mark == self.board[0][2] and mark == self.board[1][1] and mark == self.board[2][0] \
                 or mark == self.board[0][0] and mark == self.board[1][1] and mark == self.board[2][2] :
-
+                time.sleep(0.7)
                 sys.exit(f"{mark} win the game!")
 
-        if self.EMPTY_CELL  not in self.board:
+        if self.EMPTY_CELL not in self.board:
             pass
 
 
@@ -70,16 +70,44 @@ class HumanPlayer(Player):
 
         return row, col
 
-
+# I tried to make the computer win, but it not work perfectly
 class ComputerPlayer(Player):
     def play(self, board: Board):
         while True:
-            row = random.randint(0, 1)
-            col = random.randint(0, 1)
+            if board.board[0][0]== board.EMPTY_CELL:
+                row = 0
+                col =0
+            else:
+                if board.board[0][0]!= board.EMPTY_CELL:
+                    row = 0
+                    col =2
+                    if board.board[1][0] == board.EMPTY_CELL:
+                        row =1
+                        col = 0
+                    if board.board[2][0] == board.EMPTY_CELL:
+                        row = 2
+                        col = 0
+                    else:
+                        if board.board[2][0] != board.EMPTY_CELL:
+                            row=2
+                            col=2
+                            if board.board[1][0] == board.EMPTY_CELL:
+                                row = 1
+                                col = 0
+                            else:
+                                row = 1
+                                col =2
+            return row, col
 
-            if board.board[row][col] == Board.EMPTY_CELL:
-                return row, col
-
+# random options
+# class ComputerPlayer(Player):
+#     def play(self, board: Board):
+#         while True:
+#             row = random.randint(0, 2)
+#             col = random.randint(0, 2)
+#
+#             if board.board[row][col] == Board.EMPTY_CELL:
+#                 return row, col
 
 class Game:
     """
@@ -89,7 +117,6 @@ class Game:
     def play_turn(board: Board, player: Player):
         while True:
             row, col = player.play(board)
-
             try:
                 board.mark(row, col, player.marker)
             except ValueError as e:
@@ -104,11 +131,11 @@ def main():
     player2 = ComputerPlayer('Computer', 'O')
 
     while True:
-
+        # if player1 start the game we should print the board firstly
+        # print(board)
+        Game.play_turn(board, player2)
         print(board)
         Game.play_turn(board, player1)
-        print(board)
-        Game.play_turn(board, player2)
         time.sleep(1)
 
 
