@@ -28,7 +28,6 @@ class Board:
             self.board[row][col] = mark
         else:
             raise ValueError("Cell not empty")
-        # find bug - (1,0)(1,1)(1,2)
         if mark == self.board[0][0] and mark == self.board[0][1] and mark == self.board[0][2] \
                 or mark == self.board[1][0] and mark == self.board[1][1] and mark == self.board[1][2] \
                 or mark == self.board[2][0] and mark == self.board[2][1] and mark == self.board[2][2] \
@@ -40,8 +39,7 @@ class Board:
             sys.exit(f"{mark} win the game!")
 
     def check_drow(self):
-        # for i in self.board:
-            sys.exit("its drow")
+        sys.exit("its drow")
 
 
 class Player(metaclass=ABCMeta):
@@ -71,7 +69,8 @@ class HumanPlayer(Player):
         return row, col
 
 
-# I tried to make the computer win, but it not work perfectly
+#Option 1 - You can't beat the computer!
+
 class ComputerPlayer(Player):
     def play(self, board: Board):
         while True:
@@ -121,15 +120,7 @@ class ComputerPlayer(Player):
                     if board.board[0][0] != board.EMPTY_CELL and board.board[0][1] != board.EMPTY_CELL:
                         row = 0
                         col = 2
-                    # if board.board[0][0] != board.EMPTY_CELL and board.board[1][0] != board.EMPTY_CELL:
-                    #     row = 0
-                    #     col = 2
-                    # if board.board[0][1] != board.EMPTY_CELL and board.board[1][1] != board.EMPTY_CELL:
-                    #     row =1
-                    #     col =2
-                    # if board.board[0][2] != board.EMPTY_CELL and board.board[1][2] != board.EMPTY_CELL:
-                    #     row = 2
-                    #     col =2
+
             if board.board[0][0] != board.EMPTY_CELL and board.board[0][1] != board.EMPTY_CELL and board.board[0][
                 2] != board.EMPTY_CELL \
                     and board.board[1][0] != board.EMPTY_CELL and board.board[1][1] != board.EMPTY_CELL and \
@@ -141,7 +132,8 @@ class ComputerPlayer(Player):
             return row, col
 
 
-# random options
+# Option 2 - Computer selects randomly
+
 # class ComputerPlayer(Player):
 #     def play(self, board: Board):
 #         while True:
