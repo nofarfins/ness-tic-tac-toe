@@ -28,20 +28,20 @@ class Board:
             self.board[row][col] = mark
         else:
             raise ValueError("Cell not empty")
-
-        if mark == self.board[0][0] and mark == self.board[0][1] and mark== self.board[0][2]\
-                or mark == self.board[1][0] and mark == self.board[0][2] and mark == self.board[1][2]\
-                or mark== self.board[2][0] and mark == self.board[2][1] and mark== self.board[2][2]\
+        # find bug - (1,0)(1,1)(1,2)
+        if mark == self.board[0][0] and mark == self.board[0][1] and mark == self.board[0][2] \
+                or mark == self.board[1][0] and mark == self.board[1][1] and mark == self.board[1][2] \
+                or mark == self.board[2][0] and mark == self.board[2][1] and mark == self.board[2][2] \
                 or mark == self.board[0][0] and mark == self.board[1][0] and mark == self.board[2][0] \
                 or mark == self.board[0][1] and mark == self.board[1][1] and mark == self.board[2][1] \
                 or mark == self.board[0][2] and mark == self.board[1][2] and mark == self.board[2][2] \
                 or mark == self.board[0][2] and mark == self.board[1][1] and mark == self.board[2][0] \
-                or mark == self.board[0][0] and mark == self.board[1][1] and mark == self.board[2][2] :
-                time.sleep(0.7)
-                sys.exit(f"{mark} win the game!")
+                or mark == self.board[0][0] and mark == self.board[1][1] and mark == self.board[2][2]:
+            sys.exit(f"{mark} win the game!")
 
-        if self.EMPTY_CELL not in self.board:
-            pass
+    def check_drow(self):
+        # for i in self.board:
+            sys.exit("its drow")
 
 
 class Player(metaclass=ABCMeta):
@@ -63,41 +63,83 @@ class HumanPlayer(Player):
             try:
                 row = int(input('Please choose row between 0-2: '))
                 col = int(input('Please choose col between 0-2:'))
-            except ValueError :
+            except ValueError:
                 print("please choose number not sring")
             else:
                 break
 
         return row, col
 
+
 # I tried to make the computer win, but it not work perfectly
 class ComputerPlayer(Player):
     def play(self, board: Board):
         while True:
-            if board.board[0][0]== board.EMPTY_CELL:
+            if board.board[0][0] == board.EMPTY_CELL:
                 row = 0
-                col =0
+                col = 0
             else:
-                if board.board[0][0]!= board.EMPTY_CELL:
+                if board.board[0][0] != board.EMPTY_CELL:
                     row = 0
-                    col =2
+                    col = 2
                     if board.board[1][0] == board.EMPTY_CELL:
-                        row =1
+                        row = 1
                         col = 0
                     if board.board[2][0] == board.EMPTY_CELL:
                         row = 2
                         col = 0
-                    else:
-                        if board.board[2][0] != board.EMPTY_CELL:
-                            row=2
-                            col=2
-                            if board.board[1][0] == board.EMPTY_CELL:
-                                row = 1
-                                col = 0
-                            else:
-                                row = 1
-                                col =2
+                    if board.board[0][0] != board.EMPTY_CELL and board.board[0][1] != board.EMPTY_CELL:
+                        row = 0
+                        col = 2
+                    if board.board[1][2] != board.EMPTY_CELL and board.board[2][2] != board.EMPTY_CELL:
+                        row = 0
+                        col = 2
+                    if board.board[0][1] != board.EMPTY_CELL and board.board[0][2] != board.EMPTY_CELL:
+                        row = 0
+                        col = 0
+                    if board.board[0][0] != board.EMPTY_CELL and board.board[0][2] != board.EMPTY_CELL:
+                        row = 0
+                        col = 1
+                    if board.board[1][0] != board.EMPTY_CELL and board.board[1][2] != board.EMPTY_CELL:
+                        row = 1
+                        col = 1
+                    if board.board[1][0] != board.EMPTY_CELL and board.board[1][1] != board.EMPTY_CELL:
+                        row = 1
+                        col = 2
+                    if board.board[1][1] != board.EMPTY_CELL and board.board[1][2] != board.EMPTY_CELL:
+                        row = 1
+                        col = 0
+                    if board.board[2][0] != board.EMPTY_CELL and board.board[2][1] != board.EMPTY_CELL:
+                        row = 2
+                        col = 2
+                    if board.board[2][0] != board.EMPTY_CELL and board.board[2][2] != board.EMPTY_CELL:
+                        row = 2
+                        col = 1
+                    if board.board[2][1] != board.EMPTY_CELL and board.board[2][2] != board.EMPTY_CELL:
+                        row = 2
+                        col = 0
+                    if board.board[0][0] != board.EMPTY_CELL and board.board[0][1] != board.EMPTY_CELL:
+                        row = 0
+                        col = 2
+                    # if board.board[0][0] != board.EMPTY_CELL and board.board[1][0] != board.EMPTY_CELL:
+                    #     row = 0
+                    #     col = 2
+                    # if board.board[0][1] != board.EMPTY_CELL and board.board[1][1] != board.EMPTY_CELL:
+                    #     row =1
+                    #     col =2
+                    # if board.board[0][2] != board.EMPTY_CELL and board.board[1][2] != board.EMPTY_CELL:
+                    #     row = 2
+                    #     col =2
+            if board.board[0][0] != board.EMPTY_CELL and board.board[0][1] != board.EMPTY_CELL and board.board[0][
+                2] != board.EMPTY_CELL \
+                    and board.board[1][0] != board.EMPTY_CELL and board.board[1][1] != board.EMPTY_CELL and \
+                    board.board[1][2] != board.EMPTY_CELL \
+                    and board.board[2][0] != board.EMPTY_CELL and board.board[2][1] != board.EMPTY_CELL and \
+                    board.board[2][2] != board.EMPTY_CELL:
+                Board.check_drow(board)
+
             return row, col
+
 
 # random options
 # class ComputerPlayer(Player):
@@ -113,16 +155,14 @@ class Game:
     """
     Game loop.
     """
+
     @staticmethod
     def play_turn(board: Board, player: Player):
-        while True:
-            row, col = player.play(board)
-            try:
-                board.mark(row, col, player.marker)
-            except ValueError as e:
-                print(str(e))
-            else:
-                break
+        row, col = player.play(board)
+        try:
+            board.mark(row, col, player.marker)
+        except ValueError as e:
+            print(str(e))
 
 
 def main():
@@ -136,6 +176,7 @@ def main():
         Game.play_turn(board, player2)
         print(board)
         Game.play_turn(board, player1)
+        print(board)
         time.sleep(1)
 
 
